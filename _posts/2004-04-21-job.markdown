@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: Job
+wordpress_id: 5
+wordpress_url: http://lukebaker.org/archives/2004/04/21/job/
+date: 2004-04-21 21:01:46 -04:00
+---
+I got a job!  I've been working at <a href="http://www.gospelcom.net/">gospelcom.net</a> for about 4 months now. It started out as a 6 month position, and they said they'd tell me after 4 months whether or not they would be able to extend my position. Well, yesterday they offered me a job. A real job. It's been fun so far and I don't expect it to stop any time soon. I'm pretty stoked about it. In other news, I'm starting to look at customizing my site a tad. I want to give it a bit of a different look as well as integrate the <a href="http://s89626553.onlinehome.us/gallery/">gallery</a> with the main page. I'm thinking of having a "most recent" thumbnail and a random thumbnail from the gallery itself. Hopefully it'll be hot, but it looks like I'll have to do more coding on the gallery side of things than I had initially thought. Oh yeah check out the cool pictures my dad took in the <a href="http://s89626553.onlinehome.us/gallery/everglades/">Everglades.</a>  There are some <a href="http://s89626553.onlinehome.us/gallery/everglades/DSCN0133b">gems</a> <a href="http://s89626553.onlinehome.us/gallery/everglades/everge">in</a> <a href="http://s89626553.onlinehome.us/gallery/everglades/evergb">there.</a>  Yes, <a href="http://s89626553.onlinehome.us/gallery/everglades/DSCN0090a">this is a picture of an endangered florida panther!</a>

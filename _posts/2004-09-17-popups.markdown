@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: Popups!?!
+wordpress_id: 14
+wordpress_url: http://lukebaker.org/archives/2004/09/17/popups/
+date: 2004-09-17 16:23:52 -04:00
+---
+Weird.  I'm listening to <a href="http://conferences.gospelcom.net/annual/2004-fall/bios.php?speaker_ID=280">Warren</a> talk about <a href="http://conferences.gospelcom.net/annual/2004-fall/schedule.php?date=20040917">colors</a>.  One of the fake sites he was showing was <a href="http://maternityfashions.com/">maternityfashions.com</a>.  So I just went there to see what was there.  It was just a domain for sale.  However the weird thing was I got popups from that site when I closed it, while browsing with <a href="http://getfirefox.com/">Firefox 1.0PR</a> on <a href="http://fedora.redhat.com/">Linux</a>.  I believe those were the first and only popups I've ever had while browsing with <a href="http://getfirefox.com/">Firefox</a>.
