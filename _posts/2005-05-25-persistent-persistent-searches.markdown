@@ -17,7 +17,7 @@ Introducing persistent searches in <a href="http://gmail.google.com/">Gmail</a> 
 	<li>From the "Tools" menu, select "Install User Script.." and confirm all of the various prompts.</li>
 	<li>Logout of Gmail and log back in.</li>
 </ul>
-FWIW, I hope to eventually add a few more unrelated features to Gmail via this script.  For an overview of how my modifications work see my post on <a href="http://lukebaker.org/archives/2005/05/25/cookies-and-contacts/">Cookies and Contacts</a>.
+FWIW, I hope to eventually add a few more unrelated features to Gmail via this script.  For an overview of how my modifications work see my post on <a href="/archives/2005/05/25/cookies-and-contacts/">Cookies and Contacts</a>.
 
 <strong>Update:</strong> Gmail apparently changed a few things in their code this evening.  I've updated one of the regex's to work with this change.  If you see that your saved searches aren't being saved or restored properly, you'll want to reinstall <a href="/upload/powergmail.user.js">the script.</a>
 

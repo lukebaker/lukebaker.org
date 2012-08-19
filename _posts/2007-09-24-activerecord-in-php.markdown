@@ -9,4 +9,4 @@ I've been meaning to release this code for quite some time.  I've finally had a 
 
 Props to my employer, <a href="http://www.gospelcommunications.org/">Gospel Communications</a>, who allowed me to spend some time on this during work hours, as well as give me full copyright of the code.
 
-More information and documentation over on the <a href="http://lukebaker.org/projects/activerecord-in-php/">project's home page.</a>
+More information and documentation over on the <a href="/projects/activerecord-in-php/">project's home page.</a>
