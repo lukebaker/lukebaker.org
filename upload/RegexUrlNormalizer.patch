@@ -1,0 +1,649 @@
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/build.xml nutch-changed/build.xml
+--- nutch/build.xml	2004-08-31 13:52:03.000000000 -0400
++++ nutch-changed/build.xml	2004-09-04 15:13:44.000000000 -0400
+@@ -156,6 +156,7 @@
+     <junit printsummary="yes" haltonfailure="no" fork="yes" dir="${basedir}"
+       errorProperty="tests.failed" failureProperty="tests.failed">
+       <sysproperty key="test.build.data" value="${test.build.data}"/>
++      <sysproperty key="test.src.dir" value="${test.src.dir}"/>
+       <classpath refid="test.classpath"/>
+       <formatter type="plain" />
+       <batchtest todir="${test.build.dir}" unless="testcase">
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/conf/nutch-default.xml nutch-changed/conf/nutch-default.xml
+--- nutch/conf/nutch-default.xml	2004-09-02 18:41:15.000000000 -0400
++++ nutch-changed/conf/nutch-default.xml	2004-09-04 14:44:50.000000000 -0400
+@@ -410,6 +410,19 @@
+   expressions used by RegexURLFilter.</description>
+ </property>
+ 
++<!-- URL normalizer properties -->
++                                                                                
++<property>
++  <name>urlnormalizer.class</name>
++  <value>net.nutch.net.BasicUrlNormalizer</value>
++  <description>Name of the class used to normalize URLs.</description>
++</property>
++
++<property>
++  <name>urlnormalizer.regex.file</name>
++  <value>regex-normalize.xml</value>
++  <description>Name of the config file used by the RegexUrlNormalizer class.</description></property>
++
+ <!-- mime properties -->
+ 
+ <property>
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/conf/regex-normalize.xml.template nutch-changed/conf/regex-normalize.xml.template
+--- nutch/conf/regex-normalize.xml.template	1969-12-31 19:00:00.000000000 -0500
++++ nutch-changed/conf/regex-normalize.xml.template	2004-09-04 15:17:42.000000000 -0400
+@@ -0,0 +1,22 @@
++<?xml version="1.0"?>
++<!-- This is the configuration file for the RegexUrlNormalize Class.
++     This is intended so that users can specify substitutions to be
++     done on URLs. The regex engine that is used is Perl5 compatible.
++     The rules are applied to URLs in the order they occur in this file.  -->
++
++<!-- WATCH OUT: an xml parser reads this file an ampersands must be
++     expanded to &amp; -->
++
++<!-- The following rules show how to strip out session IDs 
++     that are 32 characters long and have the parameter 
++     name of PHPSESSID. Order does matter!  -->
++<regex-normalize>
++<regex>
++  <pattern>(\?|\&amp;|\&amp;amp;)PHPSESSID=[a-zA-Z0-9]{32}$</pattern>
++  <substitution></substitution>
++</regex>
++<regex>
++  <pattern>(\?|\&amp;|\&amp;amp;)PHPSESSID=[a-zA-Z0-9]{32}(\&amp;|\&amp;amp;)(.*)</pattern>
++  <substitution>$1$3</substitution>
++</regex>
++</regex-normalize>
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/java/net/nutch/db/Link.java nutch-changed/src/java/net/nutch/db/Link.java
+--- nutch/src/java/net/nutch/db/Link.java	2003-05-21 12:25:10.000000000 -0400
++++ nutch-changed/src/java/net/nutch/db/Link.java	2004-09-04 14:45:46.000000000 -0400
+@@ -9,7 +9,7 @@
+ 
+ import net.nutch.io.*;
+ import net.nutch.util.*;
+-import net.nutch.net.UrlNormalizer;
++import net.nutch.net.UrlNormalizerFactory;
+ 
+ /*********************************************
+  * This is the field in the Link Database.
+@@ -56,7 +56,7 @@
+     public Link(MD5Hash fromID, long domainID, String urlString, String anchorText)
+       throws MalformedURLException {
+         this.fromID = fromID;
+-        this.url = new UTF8(UrlNormalizer.normalize(urlString));
++        this.url = new UTF8(UrlNormalizerFactory.getNormalizer().normalize(urlString));
+         this.domainID = domainID;
+         
+         // truncate long anchors
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/java/net/nutch/db/Page.java nutch-changed/src/java/net/nutch/db/Page.java
+--- nutch/src/java/net/nutch/db/Page.java	2003-05-21 12:25:10.000000000 -0400
++++ nutch-changed/src/java/net/nutch/db/Page.java	2004-09-04 14:46:05.000000000 -0400
+@@ -9,7 +9,7 @@
+ 
+ import net.nutch.io.*;
+ import net.nutch.util.*;
+-import net.nutch.net.UrlNormalizer;
++import net.nutch.net.UrlNormalizerFactory;
+ 
+ /*********************************************
+  * A row in the Page Database.
+@@ -181,7 +181,7 @@
+   //
+   public UTF8 getURL() { return url; }
+   public void setURL(String url) throws MalformedURLException {
+-    this.url = new UTF8(UrlNormalizer.normalize(url));
++    this.url = new UTF8(UrlNormalizerFactory.getNormalizer().normalize(url));
+   }
+ 
+   public MD5Hash getMD5() { return md5; }
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/java/net/nutch/net/BasicUrlNormalizer.java nutch-changed/src/java/net/nutch/net/BasicUrlNormalizer.java
+--- nutch/src/java/net/nutch/net/BasicUrlNormalizer.java	1969-12-31 19:00:00.000000000 -0500
++++ nutch-changed/src/java/net/nutch/net/BasicUrlNormalizer.java	2004-09-04 14:48:58.000000000 -0400
+@@ -0,0 +1,70 @@
++/* Copyright (c) 2003 The Nutch Organization.  All rights reserved.   */
++/* Use subject to the conditions in http://www.nutch.org/LICENSE.txt. */
++
++package net.nutch.net;
++
++import java.net.URL;
++import java.net.MalformedURLException;
++// import java.net.URI;
++// import java.net.URISyntaxException;
++
++import java.util.logging.Logger;
++import net.nutch.util.LogFormatter;
++
++/** Converts URLs to a normal form . */
++public class BasicUrlNormalizer implements UrlNormalizer {
++  public static final Logger LOG =
++    LogFormatter.getLogger("net.nutch.net.BasicUrlNormalizer");
++  
++  public String normalize(String urlString)
++    throws MalformedURLException {
++    if ("".equals(urlString))                     // permit empty
++      return urlString;
++
++    urlString = urlString.trim();                 // remove extra spaces
++
++    URL url = new URL(urlString);
++
++    String protocol = url.getProtocol();
++    String host = url.getHost();
++    int port = url.getPort();
++    String file = url.getFile();
++
++    boolean changed = false;
++
++    if (!urlString.startsWith(protocol))        // protocol was lowercased
++      changed = true;
++
++    if ("http".equals(protocol) || "ftp".equals(protocol)) {
++      
++      if (host != null) {
++        String newHost = host.toLowerCase();    // lowercase host
++        if (!host.equals(newHost)) {
++          host = newHost;
++          changed = true;
++        }
++      }
++
++      if (port == url.getDefaultPort()) {       // uses default port
++        port = -1;                              // so don't specify it
++        changed = true;
++      }
++
++      if (file == null || "".equals(file)) {    // add a slash
++        file = "/";
++        changed = true;
++      }
++
++      if (url.getRef() != null) {                 // remove the ref
++        changed = true;
++      }
++
++    }
++
++    if (changed)
++      urlString = new URL(protocol, host, port, file).toString();
++
++    return urlString;
++  }
++
++}
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/java/net/nutch/net/RegexUrlNormalizer.java nutch-changed/src/java/net/nutch/net/RegexUrlNormalizer.java
+--- nutch/src/java/net/nutch/net/RegexUrlNormalizer.java	1969-12-31 19:00:00.000000000 -0500
++++ nutch-changed/src/java/net/nutch/net/RegexUrlNormalizer.java	2004-09-04 14:48:58.000000000 -0400
+@@ -0,0 +1,155 @@
++/* Copyright (c) 2003 The Nutch Organization.  All rights reserved.   */
++/* Use subject to the conditions in http://www.nutch.org/LICENSE.txt. */
++
++package net.nutch.net;
++
++import java.net.URL;
++import java.net.MalformedURLException;
++import java.io.IOException;
++// import java.net.URI;
++// import java.net.URISyntaxException;
++
++import java.util.List;
++import java.util.ArrayList;
++import java.util.Iterator;
++import java.util.logging.Logger;
++import net.nutch.util.LogFormatter;
++
++import javax.xml.parsers.*;
++import org.w3c.dom.*;
++import org.apache.oro.text.regex.*;
++
++import net.nutch.util.*;
++
++/** Allows users to do regex substitutions on all/any URLs that are encountered, which
++ * is useful for stripping session IDs from URLs.
++ *
++ * <p>This class must be specified as the URL normalizer to be used in <tt>nutch-site.xml</tt>
++ * or <tt>nutch-default.xml</tt>.  To do this specify the <tt>urlnormalizer.class</tt> property to
++ * have the value:  <tt>net.nutch.net.RegexUrlNormalizer</tt>.  The <tt>urlnormalizer.regex.file</tt>
++ * property should also be set to the file name of an xml file which should contain the patterns
++ * and substitutions to be done on encountered URLs.</p>
++ *
++ * @author Luke Baker
++ */
++public class RegexUrlNormalizer extends BasicUrlNormalizer
++  implements UrlNormalizer {
++
++    /** Class which holds a compiled pattern and its corresponding substition string. */
++    private static class Rule {
++      public Perl5Pattern pattern;
++      public String substitution;	
++    }
++    
++    private List rules;
++    private PatternMatcher matcher = new Perl5Matcher();
++    
++    /** Default constructor which gets the file name from either <tt>nutch-site.xml</tt>
++      * or <tt>nutch-default.xml</tt> and reads that configuration file.  It stores the regex patterns
++      * and corresponding substitutions in a List. The file should be in the CLASSPATH. */
++    public RegexUrlNormalizer() throws IOException, MalformedPatternException {
++      String filename = NutchConf.get("urlnormalizer.regex.file");
++      URL url= NutchConf.class.getClassLoader().getResource(filename);
++     
++      rules=readConfigurationFile(url.toString());
++    }
++    
++    /** Constructor which can be passed the file name, so it doesn't look in the configuration files for it. */
++    public RegexUrlNormalizer(String filename)
++      throws IOException, MalformedPatternException {
++      //URL url= NutchConf.class.getClassLoader().getResource(filename);
++      rules = readConfigurationFile(filename);
++    }
++    
++    
++    /** This function does the replacements by iterating through all the regex patterns.
++      * It accepts a string url as input and returns the altered string. */
++    public synchronized String regexNormalize(String urlString) {
++      Iterator i=rules.iterator();
++      while(i.hasNext()) {
++        Rule r=(Rule) i.next();
++        urlString = Util.substitute(matcher, r.pattern, 
++          new Perl5Substitution(r.substitution), urlString, Util.SUBSTITUTE_ALL); // actual substitution
++      }
++      return urlString;
++    }
++   
++    /** Normalizes any URLs by calling super.basicNormalize()
++      * and regexSub(). This is the function that gets called
++      * elsewhere in Nutch. */
++    public synchronized String normalize(String urlString)
++      throws MalformedURLException {
++        urlString = super.normalize(urlString); // run basicNormalize first to ready for regexNormalize
++        urlString = regexNormalize(urlString);
++        urlString = super.normalize(urlString); // make sure regexNormalize didn't screw up the URL
++        return urlString;
++  }
++  
++  
++  
++  /** Reads the configuration file and populates a List of Rules. */
++  private static List readConfigurationFile(String filename)
++    throws IOException, MalformedPatternException {
++
++    Perl5Compiler compiler=new Perl5Compiler();
++    List rules=new ArrayList();
++    try {
++      
++      LOG.info("loading " + filename);
++      // borrowed heavily from code in NutchConf.java
++      Document doc =
++        DocumentBuilderFactory.newInstance().newDocumentBuilder()
++        .parse(filename);
++      Element root = doc.getDocumentElement();
++      if (!"regex-normalize".equals(root.getTagName()))
++        LOG.severe("bad conf file: top-level element not <regex-normalize>");
++      NodeList regexes = root.getChildNodes();
++      for (int i = 0; i < regexes.getLength(); i++) {
++        Node regexNode = regexes.item(i);
++        if (!(regexNode instanceof Element))
++          continue;
++        Element regex = (Element)regexNode;
++        if (!"regex".equals(regex.getTagName()))
++          LOG.warning("bad conf file: element not <regex>");
++        NodeList fields = regex.getChildNodes();
++        String patternValue = null;
++        String subValue = null;
++        for (int j = 0; j < fields.getLength(); j++) {
++          Node fieldNode = fields.item(j);
++          if (!(fieldNode instanceof Element))
++            continue;
++          Element field = (Element)fieldNode;
++          if ("pattern".equals(field.getTagName()) && field.hasChildNodes())
++            patternValue = ((Text)field.getFirstChild()).getData();
++          if ("substitution".equals(field.getTagName()) && field.hasChildNodes())
++            subValue = ((Text)field.getFirstChild()).getData();
++          if (!field.hasChildNodes())
++            subValue = "";
++        }
++        if (patternValue != null && subValue != null) {
++          Rule rule=new Rule();
++          rule.pattern=(Perl5Pattern) compiler.compile(patternValue);
++          rule.substitution=subValue;
++          rules.add(rule);
++        }
++      }
++        
++    } catch (Exception e) {
++      LOG.severe("error parsing " + filename +" conf file: " + e);
++    }
++    return rules;
++  }
++  
++  /** Spits out patterns and substitutions that are in the configuration file. */
++  public static void main(String args[])
++    throws MalformedPatternException, IOException {
++      RegexUrlNormalizer normalizer = new RegexUrlNormalizer();
++      Iterator i=normalizer.rules.iterator();
++      while(i.hasNext()) {
++        Rule r=(Rule) i.next();
++        System.out.print(r.pattern.getPattern() + "  ");
++        System.out.println(r.substitution);
++      }
++    }
++  
++}
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/java/net/nutch/net/UrlNormalizerFactory.java nutch-changed/src/java/net/nutch/net/UrlNormalizerFactory.java
+--- nutch/src/java/net/nutch/net/UrlNormalizerFactory.java	1969-12-31 19:00:00.000000000 -0500
++++ nutch-changed/src/java/net/nutch/net/UrlNormalizerFactory.java	2004-09-04 14:48:58.000000000 -0400
+@@ -0,0 +1,38 @@
++/* Copyright (c) 2003 The Nutch Organization.  All rights reserved.   */
++/* Use subject to the conditions in http://www.nutch.org/LICENSE.txt. */
++
++package net.nutch.net;
++
++import net.nutch.util.*;
++import java.util.logging.*;
++
++/** Factory to create a UrlNormalizer from "urlnormalizer.class" config property. */
++public class UrlNormalizerFactory {
++  private static final Logger LOG =
++    LogFormatter.getLogger("net.nutch.net.UrlNormalizerFactory");
++
++  private static final String URLNORMALIZER_CLASS =
++    NutchConf.get("urlnormalizer.class");
++
++  private UrlNormalizerFactory() {}                   // no public ctor
++
++  private static UrlNormalizer normalizer;
++
++  /** Return the default UrlNormalizer implementation. */
++  public static UrlNormalizer getNormalizer() {
++
++    if (normalizer == null) {
++      try {
++        LOG.info("Using URL normalizer: " + URLNORMALIZER_CLASS);
++        Class normalizerClass = Class.forName(URLNORMALIZER_CLASS);
++        normalizer = (UrlNormalizer)normalizerClass.newInstance();
++      } catch (Exception e) {
++        throw new RuntimeException("Couldn't create "+URLNORMALIZER_CLASS, e);
++      }
++    }
++
++    return normalizer;
++
++  }
++
++}
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/java/net/nutch/net/UrlNormalizer.java nutch-changed/src/java/net/nutch/net/UrlNormalizer.java
+--- nutch/src/java/net/nutch/net/UrlNormalizer.java	2004-04-23 15:32:33.000000000 -0400
++++ nutch-changed/src/java/net/nutch/net/UrlNormalizer.java	2004-09-04 14:48:58.000000000 -0400
+@@ -3,69 +3,12 @@
+ 
+ package net.nutch.net;
+ 
+-import java.net.URL;
+ import java.net.MalformedURLException;
+-// import java.net.URI;
+-// import java.net.URISyntaxException;
+ 
+-import java.util.logging.Logger;
+-import net.nutch.util.LogFormatter;
+-
+-/** Converts URLs to a normal form . */
+-public class UrlNormalizer {
+-  public static final Logger LOG =
+-    LogFormatter.getLogger("net.nutch.net.UrlNormalizer");
+-
+-  public static String normalize(String urlString)
+-    throws MalformedURLException {
+-
+-    if ("".equals(urlString))                     // permit empty
+-      return urlString;
+-
+-    urlString = urlString.trim();                 // remove extra spaces
+-
+-    URL url = new URL(urlString);
+-
+-    String protocol = url.getProtocol();
+-    String host = url.getHost();
+-    int port = url.getPort();
+-    String file = url.getFile();
+-
+-    boolean changed = false;
+-
+-    if (!urlString.startsWith(protocol))        // protocol was lowercased
+-      changed = true;
+-
+-    if ("http".equals(protocol) || "ftp".equals(protocol)) {
+-      
+-      if (host != null) {
+-        String newHost = host.toLowerCase();    // lowercase host
+-        if (!host.equals(newHost)) {
+-          host = newHost;
+-          changed = true;
+-        }
+-      }
+-
+-      if (port == url.getDefaultPort()) {       // uses default port
+-        port = -1;                              // so don't specify it
+-        changed = true;
+-      }
+-
+-      if (file == null || "".equals(file)) {    // add a slash
+-        file = "/";
+-        changed = true;
+-      }
+-
+-      if (url.getRef() != null) {                 // remove the ref
+-        changed = true;
+-      }
+-
+-    }
+-
+-    if (changed)
+-      urlString = new URL(protocol, host, port, file).toString();
+-
+-    return urlString;
+-  }
++/** Interface used to convert URLs to normal form and optionally do regex substitutions */
++public interface UrlNormalizer {
++  
++  /* Interface for URL normalization */
++  public String normalize(String urlString) throws MalformedURLException;
+ 
+ }
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/java/net/nutch/parse/Outlink.java nutch-changed/src/java/net/nutch/parse/Outlink.java
+--- nutch/src/java/net/nutch/parse/Outlink.java	2004-07-10 16:21:37.000000000 -0400
++++ nutch-changed/src/java/net/nutch/parse/Outlink.java	2004-09-04 14:48:19.000000000 -0400
+@@ -7,7 +7,7 @@
+ import java.net.MalformedURLException;
+ 
+ import net.nutch.io.*;
+-import net.nutch.net.UrlNormalizer;
++import net.nutch.net.UrlNormalizerFactory;
+ 
+ /* An outgoing link from a page. */
+ public class Outlink implements Writable {
+@@ -18,7 +18,7 @@
+   public Outlink() {}
+ 
+   public Outlink(String toUrl, String anchor) throws MalformedURLException {
+-    this.toUrl = UrlNormalizer.normalize(toUrl);
++    this.toUrl = UrlNormalizerFactory.getNormalizer().normalize(toUrl);
+     this.anchor = anchor;
+   }
+ 
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/test/net/nutch/net/TestBasicUrlNormalizer.java nutch-changed/src/test/net/nutch/net/TestBasicUrlNormalizer.java
+--- nutch/src/test/net/nutch/net/TestBasicUrlNormalizer.java	1969-12-31 19:00:00.000000000 -0500
++++ nutch-changed/src/test/net/nutch/net/TestBasicUrlNormalizer.java	2004-09-04 14:49:33.000000000 -0400
+@@ -0,0 +1,48 @@
++/* Copyright (c) 2003 The Nutch Organization.  All rights reserved.   */
++/* Use subject to the conditions in http://www.nutch.org/LICENSE.txt. */
++
++package net.nutch.net;
++
++import java.net.URL;
++import junit.framework.TestCase;
++
++/** Unit tests for BasicUrlNormalizer. */
++public class TestBasicUrlNormalizer extends TestCase {
++  public TestBasicUrlNormalizer(String name) { super(name); }
++
++  public void testNormalizer() throws Exception {
++    // check that leading and trailing spaces are removed
++    normalizeTest(" http://foo.com/ ", "http://foo.com/");
++
++    // check that protocol is lower cased
++    normalizeTest("HTTP://foo.com/", "http://foo.com/");
++
++    // check that host is lower cased
++    normalizeTest("http://Foo.Com/index.html", "http://foo.com/index.html");
++    normalizeTest("http://Foo.Com/index.html", "http://foo.com/index.html");
++
++    // check that port number is normalized
++    normalizeTest("http://foo.com:80/index.html", "http://foo.com/index.html");
++    normalizeTest("http://foo.com:81/", "http://foo.com:81/");
++
++    // check that null path is normalized
++    normalizeTest("http://foo.com", "http://foo.com/");
++
++    // check that references are removed
++    normalizeTest("http://foo.com/foo.html#ref", "http://foo.com/foo.html");
++
++//     // check that encoding is normalized
++//     normalizeTest("http://foo.com/%66oo.html", "http://foo.com/foo.html");
++  }
++
++  private void normalizeTest(String weird, String normal) throws Exception {
++    assertEquals(normal, UrlNormalizerFactory.getNormalizer().normalize(weird));
++  }
++	
++  public static void main(String[] args) throws Exception {
++    new TestBasicUrlNormalizer("test").testNormalizer();
++  }
++
++
++
++}
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/test/net/nutch/net/test-regex-normalize.xml nutch-changed/src/test/net/nutch/net/test-regex-normalize.xml
+--- nutch/src/test/net/nutch/net/test-regex-normalize.xml	1969-12-31 19:00:00.000000000 -0500
++++ nutch-changed/src/test/net/nutch/net/test-regex-normalize.xml	2004-09-04 14:49:33.000000000 -0400
+@@ -0,0 +1,22 @@
++<?xml version="1.0"?>
++<!-- This is the configuration file for the RegexUrlNormalize Class.
++     This is intended so that users can specify substitutions to be
++     done on URLs. The regex engine that is used is Perl5 compatible.
++     The rules are applied to URLs in the order they occur in this file.  -->
++
++<!-- WATCH OUT: an xml parser reads this file an ampersands must be
++     expanded to &amp; -->
++
++<!-- The following rules show how to strip out session IDs 
++     that are 32 characters long and have the parameter 
++     name of PHPSESSID. Order does matter!  -->
++<regex-normalize>
++<regex>
++  <pattern>(\?|\&amp;|\&amp;amp;)PHPSESSID=[a-zA-Z0-9]{32}$</pattern>
++  <substitution></substitution>
++</regex>
++<regex>
++  <pattern>(\?|\&amp;|\&amp;amp;)PHPSESSID=[a-zA-Z0-9]{32}(\&amp;|\&amp;amp;)(.*)</pattern>
++  <substitution>$1$3</substitution>
++</regex>
++</regex-normalize>
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/test/net/nutch/net/TestRegexUrlNormalizer.java nutch-changed/src/test/net/nutch/net/TestRegexUrlNormalizer.java
+--- nutch/src/test/net/nutch/net/TestRegexUrlNormalizer.java	1969-12-31 19:00:00.000000000 -0500
++++ nutch-changed/src/test/net/nutch/net/TestRegexUrlNormalizer.java	2004-09-04 14:49:33.000000000 -0400
+@@ -0,0 +1,39 @@
++/* Copyright (c) 2003 The Nutch Organization.  All rights reserved.   */
++/* Use subject to the conditions in http://www.nutch.org/LICENSE.txt. */
++
++package net.nutch.net;
++
++import java.net.URL;
++import junit.framework.TestCase;
++import net.nutch.net.RegexUrlNormalizer;
++
++/** Unit tests for RegexUrlNormalizer. */
++public class TestRegexUrlNormalizer extends TestBasicUrlNormalizer {
++  public TestRegexUrlNormalizer(String name) { super(name); }
++
++  public void testNormalizer() throws Exception {
++    normalizeTest("http://foo.com/foo.php?f=2&PHPSESSID=cdc993a493e899bed04f4d0c8a462a03",
++      "http://foo.com/foo.php?f=2");
++    normalizeTest("http://foo.com/foo.php?f=2&PHPSESSID=cdc993a493e899bed04f4d0c8a462a03&q=3",
++      "http://foo.com/foo.php?f=2&q=3");
++    normalizeTest("http://foo.com/foo.php?PHPSESSID=cdc993a493e899bed04f4d0c8a462a03&f=2",
++      "http://foo.com/foo.php?f=2");
++    normalizeTest("http://foo.com/foo.php?PHPSESSID=cdc993a493e899bed04f4d0c8a462a03",
++      "http://foo.com/foo.php");
++  }
++
++  private void normalizeTest(String weird, String normal) throws Exception {
++    String testSrcDir = System.getProperty("test.src.dir");
++    String path = testSrcDir + "/net/nutch/net/test-regex-normalize.xml";
++    RegexUrlNormalizer normalizer = new RegexUrlNormalizer(path);
++    assertEquals(normal, normalizer.normalize(weird));
++  }
++	
++  public static void main(String[] args) throws Exception {
++    new TestRegexUrlNormalizer("test").testNormalizer();
++    new TestBasicUrlNormalizer("test").testNormalizer(); // need to make sure it passes this test too
++  }
++
++
++
++}
+diff -Nur --exclude='*.txt' --exclude='*-site.xml' --exclude='*.html' --exclude='*.jar' --exclude='*.class' --exclude='*CVS*' --exclude='*Pdf*' nutch/src/test/net/nutch/net/TestUrlNormalizer.java nutch-changed/src/test/net/nutch/net/TestUrlNormalizer.java
+--- nutch/src/test/net/nutch/net/TestUrlNormalizer.java	2004-04-23 15:32:34.000000000 -0400
++++ nutch-changed/src/test/net/nutch/net/TestUrlNormalizer.java	1969-12-31 19:00:00.000000000 -0500
+@@ -1,48 +0,0 @@
+-/* Copyright (c) 2003 The Nutch Organization.  All rights reserved.   */
+-/* Use subject to the conditions in http://www.nutch.org/LICENSE.txt. */
+-
+-package net.nutch.net;
+-
+-import java.net.URL;
+-import junit.framework.TestCase;
+-
+-/** Unit tests for UrlNormalizer. */
+-public class TestUrlNormalizer extends TestCase {
+-  public TestUrlNormalizer(String name) { super(name); }
+-
+-  public void testNormalizer() throws Exception {
+-    // check that leading and trailing spaces are removed
+-    normalizeTest(" http://foo.com/ ", "http://foo.com/");
+-
+-    // check that protocol is lower cased
+-    normalizeTest("HTTP://foo.com/", "http://foo.com/");
+-
+-    // check that host is lower cased
+-    normalizeTest("http://Foo.Com/index.html", "http://foo.com/index.html");
+-    normalizeTest("http://Foo.Com/index.html", "http://foo.com/index.html");
+-
+-    // check that port number is normalized
+-    normalizeTest("http://foo.com:80/index.html", "http://foo.com/index.html");
+-    normalizeTest("http://foo.com:81/", "http://foo.com:81/");
+-
+-    // check that null path is normalized
+-    normalizeTest("http://foo.com", "http://foo.com/");
+-
+-    // check that references are removed
+-    normalizeTest("http://foo.com/foo.html#ref", "http://foo.com/foo.html");
+-
+-//     // check that encoding is normalized
+-//     normalizeTest("http://foo.com/%66oo.html", "http://foo.com/foo.html");
+-  }
+-
+-  private void normalizeTest(String weird, String normal) throws Exception {
+-    assertEquals(normal, UrlNormalizer.normalize(weird));
+-  }
+-	
+-  public static void main(String[] args) throws Exception {
+-    new TestUrlNormalizer("test").testNormalizer();
+-  }
+-
+-
+-
+-}

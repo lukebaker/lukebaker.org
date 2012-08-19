@@ -1,8 +1,0 @@
---- 
-layout: post
-title: Gmail Bug
-wordpress_id: 29
-wordpress_url: http://lukebaker.org/archives/2005/06/09/gmail-bug/
-date: 2005-06-09 08:31:46 -04:00
----
-I'm using Gmail a lot more recently (more later), however I've found an annoying bug. I'm now forwarding all my messages to a non-Gmail account to Gmail. All of these are given a label to indicate that they came to that non-Gmail account. They are also optionally given additional labels depending on if they have certain subjects, recipients, or content. I want to be able to do a search for any messages that <strong>only</strong> have the initial label that indicates that this email came through my non-Gmail account. For instance, if I label all my bills as "bills" and all emails from my gas company as "gascompany", then some emails may be labeled both "bills" and "gascompany". However, when I do a search like [label:bills -label:gascompany], I sometimes will get messages that are labeled both "bills" and "gascompany". For those that are showing up in my results (but shouldn't be), I can manually give them the "gascompany" label (again) and they won't show up in the results if I do the same search again. Here's proof: <img alt="Example of Gmail Bug" src="../../upload/gmailbugcropped.png" />

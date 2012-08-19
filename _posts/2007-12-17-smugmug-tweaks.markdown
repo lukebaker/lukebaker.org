@@ -5,7 +5,7 @@ wordpress_id: 77
 wordpress_url: http://lukebaker.org/archives/2007/12/17/smugmug-tweaks/
 date: 2007-12-17 13:02:02 -05:00
 ---
-<img src="http://lukebaker.org/wordpress/wp-content/uploads/2007/12/screenshot7.png" alt="SmugMug Admin Rating Sample" align="right" />
+<img src="/upload/screenshot7.png" alt="SmugMug Admin Rating Sample" align="right" />
 
 Lately, I've been working on some <a href="http://www.smugmug.com/">SmugMug</a> tweaks to take advantage of their <a href="http://blogs.smugmug.com/don/2007/04/20/lifetime-free-pro-accounts-to-developers/">offer of a free lifetime account for developers who use their API</a>.  The first one was a quick hack which uploads some recent SmugMug photos to your <a href="http://flickr.com/">Flickr</a> account.  This allows people who switched to SmugMug to still keep up with their Flickr network.  More information is available on the <a href="http://lukebaker.org/projects/smugmug-tweaks/smugmug-upload-recent-to-flickr/">project's page</a>.
 <p align="left">The second and more interesting one is some JavaScript that adds the ability for SmugMug users to rate their own photos.  This is the first of two projects to aid my work flow.  Eventually I want to be able to upload a bunch of photos in a private album, rate them, and then in one fell swoop move all photos with a rating higher than X to a public album.</p>

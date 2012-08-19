@@ -7,4 +7,4 @@ date: 2005-03-23 17:59:55 -05:00
 ---
 So that's what I was doing wrong when transporting hard drives!
 
-<img src='http://lukebaker.org/upload/handle_with_care.jpg' alt='Hard drive inside carton of eggs' />
+<img src='/upload/handle_with_care.jpg' alt='Hard drive inside carton of eggs' />
