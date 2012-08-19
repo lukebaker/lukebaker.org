@@ -1,3 +1,6 @@
-permalink: /archives:year:month:day:title.html
+url: http://lukebaker.github.com
+title: lukebaker.org
+description: lukebaker.org
+permalink: /archives/:year/:month/:day/:title/
 markdown: rdiscount
 pygments: true
