@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>lukebaker.org</title>
+    <meta charset="utf-8">
+    <link rel="openid.server" href="http://www.myopenid.com/server" />
+    <link rel="openid.delegate" href="http://lukebaker.myopenid.com/" />
+    <meta http-equiv="X-XRDS-Location" content="http://lukebaker.myopenid.com/xrds" />
+
+    <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/custom.css" rel="stylesheet">
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-2917819-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner no-rounded">
+        <div class="container">
+          <a class="brand" href="/">lukebaker.org</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      {{ content }}
+    </div>
+  </body>
+</html>
