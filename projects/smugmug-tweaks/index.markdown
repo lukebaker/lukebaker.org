@@ -11,7 +11,7 @@ Here are some projects that interact with
     to [Flickr][]. [Read more …][**Flickr Export**]
 
   [SmugMug]: http://www.smugmug.com/
-  [**Admin Rating**]: http://lukebaker.org/projects/smugmug-tweaks/smugmug-admin-rating/
-  [**Flickr Export**]: http://lukebaker.org/projects/smugmug-tweaks/smugmug-upload-recent-to-flickr/
+  [**Admin Rating**]: /projects/smugmug-tweaks/smugmug-admin-rating/
+  [**Flickr Export**]: /projects/smugmug-tweaks/smugmug-upload-recent-to-flickr/
   [Flickr]: http://flickr.com/
 

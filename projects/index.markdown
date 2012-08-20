@@ -10,6 +10,6 @@ syntax and most of the features in the Rails version. [Read more
 An assortment of scripts that alter or integrate with [SmugMug.][] [Read more…][SmugMug
 Tweaks]
 
-  [ActiveRecord in PHP]: http://lukebaker.org/projects/activerecord-in-php/
-  [SmugMug Tweaks]: http://lukebaker.org/projects/smugmug-tweaks/
+  [ActiveRecord in PHP]: /projects/activerecord-in-php/
+  [SmugMug Tweaks]: /projects/smugmug-tweaks/
   [SmugMug.]: http://www.smugmug.com/

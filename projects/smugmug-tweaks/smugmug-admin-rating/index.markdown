@@ -28,4 +28,4 @@ add the following to text area for the footer.
 
   [Firefox.]: http://getfirefox.com/
   [Greasemonkey.]: https://addons.mozilla.org/en-US/firefox/addon/748
-  [this Greasemonkey script.]: http://lukebaker.org/smugmug/admin-rating.user.js
+  [this Greasemonkey script.]: /smugmug/admin-rating.user.js
