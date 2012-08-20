@@ -1,6 +1,7 @@
 ---
 layout: post
 ---
+# ActiveRecord In PHP
 ## Motiviation
 
 I wrote this after having been spoiled by Ruby on Rails’ implementation

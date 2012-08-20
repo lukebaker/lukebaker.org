@@ -1,6 +1,7 @@
 ---
 layout: post
 ---
+## SmugMug Admin Rating
 This script gives you a way to rate
 your own photos. To rate a photo simply click on a star. The stars are
 only visible to you when you’re logged into your site. The rating is
