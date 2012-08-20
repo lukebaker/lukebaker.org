@@ -1,4 +1,5 @@
 ---
+layout: post
 ---
 # SmugMug Tweaks
 Here are some projects that interact with

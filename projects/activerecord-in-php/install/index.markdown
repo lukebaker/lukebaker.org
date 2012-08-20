@@ -1,5 +1,12 @@
 ---
+layout: post
 ---
+## ActiveRecord In PHP
+<ul class="breadcrumb">
+  <li><a href="/projects/activerecord-in-php/documentation/">Documentation</a> <span class="divider">|</span></li>
+  <li><a href="/projects/activerecord-in-php/example/">Example</a> <span class="divider">|</span></li>
+  <li class="active">Install</li>
+</ul>
 **Installation Steps**
 
 1.  Create your database and tables, if you haven’t already. (remember

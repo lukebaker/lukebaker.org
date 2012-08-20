@@ -1,4 +1,5 @@
 ---
+layout: post
 ---
 This PHP script is meant to be run from the command line. It is a quick
 hack, which will upload some of your recent photos that are on

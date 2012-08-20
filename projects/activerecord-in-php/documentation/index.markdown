@@ -1,5 +1,12 @@
 ---
+layout: post
 ---
+## ActiveRecord In PHP
+<ul class="breadcrumb">
+  <li class="active">Documentation <span class="divider">|</span></li>
+  <li><a href="/projects/activerecord-in-php/example/">Example</a> <span class="divider">|</span></li>
+  <li><a href="/projects/activerecord-in-php/install/">Install</a></li>
+</ul>
 While this attempts to document most of the features of ActiveRecord, it may not be entirely complete. I've tried to create tests for all pieces of functionality that exist in ActiveRecord. To view and / or run these tests check out the devel/ branch in the Subversion repository. In other words, there may be some functionality that is not documented here but is used in the tests.
 
 For example purposes, let’s pretend we’re building a blog. You’ll have model classes which are each the model of a database table. Each model class is in a separate file. The stubs of these files are automatically generated for you by generate.php. Every time you update your database schema, you'll have to run generate.php again. It will not overwrite the files you've altered, but will overwrite the \*Base.php files. Once you have the model stubs generated you can use them and work with the tables individually. However, in order to use the relationship specific abilities of ActiveRecord, you’ll need to specify the relationships in your models as outlined below in the Associations section.
@@ -312,4 +319,3 @@ CREATE TABLE `slugs` (
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM;
 {% endhighlight %}
-

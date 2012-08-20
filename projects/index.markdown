@@ -1,4 +1,5 @@
 ---
+layout: post
 ---
 ## [ActiveRecord in PHP][]
 Inspired by the Ruby on Rails’
