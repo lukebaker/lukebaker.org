@@ -1,6 +1,9 @@
 ---
 layout: post
 ---
+<div class="alert">
+    This page has been moved here: <a href="{{site.url}}/activerecord-php">{{site.url}}/activerecord-php</a>
+</div>
 # ActiveRecord In PHP
 ## Motiviation
 
