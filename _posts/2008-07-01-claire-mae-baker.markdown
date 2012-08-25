@@ -11,4 +11,4 @@ My wife and I are the proud parents of Claire Mae Baker.  She was born a few we
 19 inches
 June 27, 2008 8:32pm
 
-<img src="http://lukebaker.smugmug.com/photos/321769622_yLqYH-S.jpg" alt="" />
+<img src="http://lukebaker.smugmug.com/photos/321769622_yLqYH-L.jpg" alt="" />
