@@ -10,4 +10,4 @@ Google decided to change the domain and URL syntax of Gmail:
 	<li>gmail.google.com redirects to mail.google.com</li>
 	<li>instead of URLs like /gmail?param they look like /mail/?param</li>
 </ol>
-<a href="/upload/powergmail.user.js">My persistent searches script</a> has been updated to work with these changes. I would recommend uninstalling the original script and then installing the updated version.
+<a href="{{site.url}}/upload/powergmail.user.js">My persistent searches script</a> has been updated to work with these changes. I would recommend uninstalling the original script and then installing the updated version.

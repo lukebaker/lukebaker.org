@@ -13,12 +13,12 @@ Introducing persistent searches in <a href="http://gmail.google.com/">Gmail</a> 
 <strong>Installation Instructions:</strong>
 <ul>
 	<li>Install <a href="http://greasemonkey.mozdev.org/">Greasemonkey</a> (only works with <a href="http://getfirefox.com/">Firefox</a>).</li>
-	<li>Open up <a href="/upload/powergmail.user.js">this user script</a> (in Firefox).</li>
+	<li>Open up <a href="{{site.url}}/upload/powergmail.user.js">this user script</a> (in Firefox).</li>
 	<li>From the "Tools" menu, select "Install User Script.." and confirm all of the various prompts.</li>
 	<li>Logout of Gmail and log back in.</li>
 </ul>
-FWIW, I hope to eventually add a few more unrelated features to Gmail via this script.  For an overview of how my modifications work see my post on <a href="/archives/2005/05/25/cookies-and-contacts/">Cookies and Contacts</a>.
+FWIW, I hope to eventually add a few more unrelated features to Gmail via this script.  For an overview of how my modifications work see my post on <a href="{{site.url}}/archives/2005/05/25/cookies-and-contacts/">Cookies and Contacts</a>.
 
-<strong>Update:</strong> Gmail apparently changed a few things in their code this evening.  I've updated one of the regex's to work with this change.  If you see that your saved searches aren't being saved or restored properly, you'll want to reinstall <a href="/upload/powergmail.user.js">the script.</a>
+<strong>Update:</strong> Gmail apparently changed a few things in their code this evening.  I've updated one of the regex's to work with this change.  If you see that your saved searches aren't being saved or restored properly, you'll want to reinstall <a href="{{site.url}}/upload/powergmail.user.js">the script.</a>
 
 <strong>Update (December 1, 2005):</strong> The script has been updated to work with <a href="http://getfirefox.com/">Firefox 1.5</a> and <a href="http://greaseblog.blogspot.com/2005/11/greasemonkey-064_30.html">Greasemonkey 0.6.4.</a>
