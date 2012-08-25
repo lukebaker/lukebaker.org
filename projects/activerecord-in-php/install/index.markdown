@@ -2,7 +2,7 @@
 layout: post
 ---
 <div class="alert">
-    This page has been moved here: <a href="{{site.url}}/activerecord-php">{{site.url}}/activerecord-php</a>
+    This page has been moved here: <a href="http://lukebaker.github.com/activerecord-php">http://lukebaker.github.com/activerecord-php</a>
 </div>
 ## ActiveRecord In PHP
 <ul class="breadcrumb">
