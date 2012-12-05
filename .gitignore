@@ -1,6 +1,3 @@
 _site/
 *.swp
 .bundle/
-bin/
-vendor/gems
-vendor/specifications
