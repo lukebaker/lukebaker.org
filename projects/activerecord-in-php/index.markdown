@@ -2,7 +2,7 @@
 layout: post
 ---
 <div class="alert">
-    This page has been moved here: <a href="http://lukebaker.github.com/activerecord-php">http://lukebaker.github.com/activerecord-php</a>
+    This page has been moved here: <a href="http://code.lukebaker.org/activerecord-php">http://code.lukebaker.org/activerecord-php</a>
 </div>
 # ActiveRecord In PHP
 ## Motiviation
