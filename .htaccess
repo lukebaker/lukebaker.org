@@ -1,1 +1,2 @@
 DirectoryIndex index.html index.xml
+ErrorDocument 404 /error-404.html 
