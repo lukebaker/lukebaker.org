@@ -1,13 +1,13 @@
 ---
 layout: post
 ---
-<div class="alert">
+<div class="alert alert-warning">
     This page has been moved here: <a href="http://code.lukebaker.org/activerecord-php">http://code.lukebaker.org/activerecord-php</a>
 </div>
 ## ActiveRecord In PHP
 <ul class="breadcrumb">
-  <li><a href="/projects/activerecord-in-php/documentation/">Documentation</a> <span class="divider">|</span></li>
-  <li><a href="/projects/activerecord-in-php/example/">Example</a> <span class="divider">|</span></li>
+  <li><a href="/projects/activerecord-in-php/documentation/">Documentation</a></li>
+  <li><a href="/projects/activerecord-in-php/example/">Example</a></li>
   <li class="active">Install</li>
 </ul>
 **Installation Steps**
