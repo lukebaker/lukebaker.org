@@ -2,5 +2,3 @@ url: http://lukebaker.org
 title: lukebaker.org
 description: lukebaker.org
 permalink: /archives/:year/:month/:day/:title/
-markdown: rdiscount
-pygments: true

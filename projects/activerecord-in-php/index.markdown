@@ -4,7 +4,9 @@ layout: post
 <div class="alert alert-warning">
     This page has been moved here: <a href="http://code.lukebaker.org/activerecord-php">http://code.lukebaker.org/activerecord-php</a>
 </div>
+
 # ActiveRecord In PHP
+
 ## Motiviation
 
 I wrote this after having been spoiled by Ruby on Rails’ implementation
