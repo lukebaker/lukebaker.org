@@ -2,3 +2,6 @@ url: http://lukebaker.org
 title: lukebaker.org
 description: lukebaker.org
 permalink: /archives/:year/:month/:day/:title/
+
+sass:
+  style: compressed
