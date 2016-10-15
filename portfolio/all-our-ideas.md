@@ -3,7 +3,7 @@ layout: page
 ---
 # All Our Ideas
 
-[![screenshot of allourideas.org](/images/allourideas.png)](/images/allourideas.png)
+[![screenshot of allourideas.org](/assets/images/allourideas.png)](/assets/images/allourideas.png)
 
 ## About the project
 
