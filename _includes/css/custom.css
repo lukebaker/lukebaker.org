@@ -5,3 +5,9 @@
   font-size: 12px;
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+.md-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
