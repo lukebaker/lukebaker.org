@@ -1,8 +1,0 @@
---- 
-layout: post
-title: Here it is.
-wordpress_id: 2
-wordpress_url: http://lukebaker.org/archives/2004/02/09/here-it-is/
-date: 2004-02-09 23:18:47 -05:00
----
-So I set this thingee up. I doubt anyone will read it, but I doubt even more that I'll use it much. I've had thoughts that I would like to use a weblog and do some interesting stuff with it. Who knows if that'll ever happen. Eventually I might change from the default theme and stuff.... and maybe integrate my gallery with it....Time for bed.

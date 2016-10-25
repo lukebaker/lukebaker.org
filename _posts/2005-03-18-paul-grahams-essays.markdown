@@ -1,4 +1,4 @@
---- 
+---
 layout: post
 title: Paul Graham's Essays
 wordpress_id: 21
@@ -13,5 +13,4 @@ In <a href="http://paulgraham.com/start.html"><em>How to Start a Startup</em></a
 In <a href="http://paulgraham.com/essay.html"><em>The Age of the Essay</em></a>, he says the following about the classic "essay" teachings in highschool:
 <blockquote>"...uh, what is the conclusion? I was never sure about that in high school. It seemed as if we were just supposed to restate what we said in the first paragraph, but in different enough words that no one could tell."</blockquote>
 
-I think I'll have to check out his <a href="http://paulgraham.com/hackpaint.html">book</a> sometime.  I believe I was assigned to read part of it once while at Calvin, but it's anybody's guess as to whether or not I actually read it...
-<strong>[Edit:]</strong> Or not, apparently I wasn't even at Calvin when the book was published.  Silly me.
+I think I'll have to check out his <a href="http://paulgraham.com/hackpaint.html">book</a> sometime.

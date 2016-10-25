@@ -1,8 +1,0 @@
---- 
-layout: post
-title: Job
-wordpress_id: 5
-wordpress_url: http://lukebaker.org/archives/2004/04/21/job/
-date: 2004-04-21 21:01:46 -04:00
----
-I got a job!  I've been working at <a href="http://www.gospelcom.net/">gospelcom.net</a> for about 4 months now. It started out as a 6 month position, and they said they'd tell me after 4 months whether or not they would be able to extend my position. Well, yesterday they offered me a job. A real job. It's been fun so far and I don't expect it to stop any time soon. I'm pretty stoked about it. In other news, I'm starting to look at customizing my site a tad.
