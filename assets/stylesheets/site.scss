@@ -1,7 +1,14 @@
 ---
 ---
 
-$font-size-base: 16px;
+$green-01: #27A822;
+$green-02: darken($green-01, 10%);
+
+$font-size-base: 18px;
+$line-height-base: 1.5;
+
+$link-color: $green-02;
+
 $navbar-border-radius: 0;
 $navbar-default-bg: #fff;
 $navbar-default-link-color: #333;
@@ -22,12 +29,24 @@ h3, .h3 {
   border-top: none;
 }
 
+@media (min-width: $screen-md-min) {
+  .navbar-header {
+    padding: 0 3em;
+  }
+}
+
 /* styles borrowed bootstrap's styles for <code> */
 .short-date {
   padding: 2px 6px 2px 0;
   color: gray;
   font-size: $font-size-base - 2;
   font-family: $font-family-monospace;
+}
+
+.meta.date {
+  color: gray;
+  margin-top: -25px;
+  margin-bottom: 25px;
 }
 
 body {
