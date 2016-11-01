@@ -13,15 +13,19 @@ layout: nil
     <name><![CDATA[{{ site.author | strip_html }}]]></name>
     {% if site.email %}<email><![CDATA[{{ site.email }}]]></email>{% endif %}
   </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
 
+  {% assign today = "now" | date: "%s" %}
   {% for post in site.posts limit: 5 %}
-  <entry>
-    <title type="html"><![CDATA[{{ post.title | cdata_escape }}]]></title>
-    <link href="{{ site.url }}{{ post.url }}"/>
-    <updated>{{ post.date | date_to_xmlschema }}</updated>
-    <id>{{ site.url }}{{ post.id }}</id>
-    <content type="html"><![CDATA[{{ post.content | expand_urls: site.url | cdata_escape }}]]></content>
-  </entry>
+    {% assign posted = post.date | date: "%s" %}
+    {% assign daysold = today | minus: posted | divided_by: 86400 | floor %}
+    {% if daysold < 120 %}
+      <entry>
+        <title type="html"><![CDATA[{{ post.title | cdata_escape }}]]></title>
+        <link href="{{ site.url }}{{ post.url }}"/>
+        <updated>{{ post.date | date_to_xmlschema }}</updated>
+        <id>{{ site.url }}{{ post.id }}</id>
+        <content type="html"><![CDATA[{{ post.content | expand_urls: site.url | cdata_escape }}]]></content>
+      </entry>
+    {% endif %}
   {% endfor %}
 </feed>
