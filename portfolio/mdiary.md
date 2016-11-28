@@ -1,6 +1,6 @@
 ---
 layout: page
-title: mDiary Study of Adolescent Relationships
+title: Portfolio - mDiary Study of Adolescent Relationships
 technology: [ Ruby on Rails, MySQL, Bootstrap, Twilio API, Qualtrics API, GnuPG ]
 ---
 # mDiary Study of Adolescent Relationships

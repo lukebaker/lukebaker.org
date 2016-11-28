@@ -1,6 +1,7 @@
 ---
 layout: page
 technologies: [PHP, JavaScript, Backbone.js, jQuery, CodeIgniter, HTML, CSS, MySQL]
+title: Portfolio - Bible Search
 ---
 # Bible Search
 

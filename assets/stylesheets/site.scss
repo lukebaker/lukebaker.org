@@ -7,7 +7,12 @@ $green-02: darken($green-01, 10%);
 $font-size-base: 18px;
 $line-height-base: 1.5;
 
+$brand-primary: $green-02;
+
 $link-color: $green-02;
+
+$btn-default-color: $green-02;
+$btn-default-border: darken($green-02, 5%);
 
 $navbar-border-radius: 0;
 $navbar-default-bg: #fff;
@@ -15,10 +20,10 @@ $navbar-default-link-color: #333;
 $navbar-default-link-hover-color: #000;
 
 @import "bootstrap";
+@import "fontello/css/fontello";
 
 h1, .h1,
-h2, .h2,
-h3, .h3 {
+h2, .h2 {
   margin-top: $line-height-computed * 2;
   margin-bottom: ($line-height-computed);
 }
@@ -30,11 +35,21 @@ h3, .h3 {
 }
 
 @media (min-width: $screen-md-min) {
-  .navbar-header {
-    padding: 0 3em;
+  .navbar .container-fluid {
+    padding-left: 3em;
+    padding-right: 3em;
   }
 }
 
+.profile-image-block {
+  max-width: 300px;
+  margin-bottom: 40px;
+}
+
+.icon-links a {
+  font-size: 24px;
+  color: $gray;
+}
 /* styles borrowed bootstrap's styles for <code> */
 .short-date {
   padding: 2px 6px 2px 0;
@@ -57,4 +72,8 @@ body {
   img {
     @extend .img-responsive;
   }
+}
+
+h1 a:hover {
+  text-decoration: none;
 }

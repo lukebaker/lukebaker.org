@@ -1,9 +1,10 @@
 ---
 layout: page
+title: Portfolio - All Our Ideas
 ---
 # All Our Ideas
 
-[![screenshot of allourideas.org](/assets/images/allourideas.png)](/assets/images/allourideas.png)
+[![screenshot of allourideas.org](/assets/images/all-our-ideas.png)](/assets/images/all-our-ideas.png)
 
 ## About the project
 
